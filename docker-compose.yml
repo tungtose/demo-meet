@@ -1,0 +1,45 @@
+version: '3'
+services:
+  nginx:
+    image: jwilder/nginx-proxy
+    ports:
+        - 80:80
+        - 443:443
+    restart: always
+    labels:
+        - "com.github.jrcs.letsencrypt_nginx_proxy_companion.nginx_proxy=true"
+    volumes:
+        - ./nginx/certs:/etc/nginx/certs:rw
+        - /etc/nginx/vhost.d
+        - /usr/share/nginx/html
+        - ./proxy-config.conf:/etc/nginx/conf.d/proxy-config.conf:ro
+        - /var/run/docker.sock:/tmp/docker.sock:ro
+    privileged: true
+  nginx_letsencrypt:
+    image: jrcs/letsencrypt-nginx-proxy-companion
+    restart: always
+    volumes:
+        - ./nginx/certs:/etc/nginx/certs:rw
+        - /var/run/docker.sock:/var/run/docker.sock:ro
+    volumes_from:
+        - nginx
+    privileged: true
+
+  media_server:
+    build: ./media-server
+    ports:
+     - 3001:3001
+    restart: always
+    privileged: true
+    environment:
+     - VIRTUAL_HOST=media-server.codelynx.io
+     - LETSENCRYPT_HOST=media-server.codelynx.io
+  web:
+    build: ./web
+    restart: always
+    privileged: true
+    ports:
+      - 3000:3000
+    environment:
+     - VIRTUAL_HOST=meet.codelynx.io
+     - LETSENCRYPT_HOST=meet.codelynx.io  

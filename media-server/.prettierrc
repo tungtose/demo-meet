@@ -1,0 +1,7 @@
+{
+  "editor.formatOnSave": true,
+  "singleQuote": true,
+  "arrowParens": "avoid",
+  "tabWidth": 2,
+  "printWidth": 90
+}

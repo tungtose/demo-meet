@@ -1,0 +1,23 @@
+{
+  "compilerOptions": {
+    "module": "commonjs",
+    "noImplicitReturns": true,
+    "noUnusedLocals": false,
+    "outDir": "./dist",
+    "sourceMap": true,
+    "strict": true,
+    "target": "es2017",
+    "esModuleInterop": true,
+    "baseUrl": ".",
+    "paths": {
+      "@config/*": ["src/config/*"],
+      "@resolvers/*": ["src/resolvers/*"],
+      "@types/*": ["src/types/*"],
+      "@utils": ["src/utils/*"],
+      "@schema": ["src/schema/*"],
+      "@database": ["src/database/*"]
+    }
+  },
+  "compileOnSave": true,
+  "include": ["src/**/*.ts"]
+}
